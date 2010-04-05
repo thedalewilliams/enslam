@@ -57,7 +57,7 @@ namespace Enslam.Site
             if (_container == null)
             {
                 // create a new Windsor Container
-                _container = ContainerBuilder.Build(@"Configuration/Windsor.config");
+                _container = ContainerBuilder.Build();
                 // set the controller factory to the Windsor controller factory (in MVC Contrib)
                 System.Web.Mvc.ControllerBuilder.Current.SetControllerFactory(new IoCControllerFactory(new WindsorDependencyResolver(_container)));
             }

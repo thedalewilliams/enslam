@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Web.Mvc;
+using Castle.Core.Resource;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.Configuration.Interpreters;
@@ -8,9 +9,9 @@ namespace Enslam.Site.IoC
 {
     public static class ContainerBuilder
     {
-        public static IWindsorContainer Build(string configPath)
+        public static IWindsorContainer Build()
         {
-            var container = new WindsorContainer(new XmlInterpreter(configPath));
+            var container = new WindsorContainer(new XmlInterpreter(new ConfigResource()));
 
             // automatically register controllers
             container.Register(AllTypes
