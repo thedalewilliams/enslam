@@ -1,19 +1,22 @@
 ﻿using System;
 using System.Web.Mvc;
+using Castle.ActiveRecord;
 using Castle.ActiveRecord.Framework;
 using Castle.Services.Transaction;
+using Enslam.Common.Repositories;
 using Enslam.Site.Models;
-
+using TransactionMode=Castle.Services.Transaction.TransactionMode;
+using System.Linq;
 namespace Enslam.Site.Controllers
 {
     [Transactional]
     public class TestController : Controller
     {
-        private readonly ISessionFactoryHolder _sessionFactoryHolder;
+        private readonly IRepository<Test> _testRepository;
 
-        public TestController(ISessionFactoryHolder sessionFactoryHolder)
+        public TestController(IRepository<Test> testRepository)
         {
-            _sessionFactoryHolder = sessionFactoryHolder;
+            _testRepository = testRepository;
         }
 
         //
@@ -21,15 +24,17 @@ namespace Enslam.Site.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            var tests = _testRepository.GetAll().ToList();
+            return View(tests);
         }
 
         //
         // GET: /Test/Details/5
 
-        public ActionResult Details(int id)
+        public ActionResult Details(Guid id)
         {
-            return View();
+            var test = _testRepository.GetById(id);
+            return View(test);
         }
 
         //
@@ -38,61 +43,53 @@ namespace Enslam.Site.Controllers
         public virtual ActionResult Create()
         {
             var test = new Test();
-            test.Save();
-
+            ActiveRecordMediator<Test>.Save(test);
             return View(test);
         } 
 
         //
         // GET: /Test/Edit/5
  
-        public ActionResult Edit(int id)
+        public ActionResult Edit(Guid id)
         {
-            return View();
+            var test = _testRepository.GetById(id);
+            return View(test);
         }
 
         //
         // POST: /Test/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(Test test)
         {
-            try
+            if(ModelState.IsValid)
             {
-                // TODO: Add update logic here
- 
+                _testRepository.SaveOnSubmit(test);
+
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+
+            return View(test);
+
         }
 
         //
         // GET: /Test/Delete/5
- 
-        public ActionResult Delete(int id)
+
+        public ActionResult Delete(Guid id)
         {
-            return View();
+            var test = _testRepository.GetById(id);
+            return View(test);
         }
 
         //
         // POST: /Test/Delete/5
 
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(Test test)
         {
-            try
-            {
-                // TODO: Add delete logic here
- 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            _testRepository.DeleteOnSubmit(test);
+            return RedirectToAction("Index");
         }
     }
 }

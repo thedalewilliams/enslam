@@ -153,7 +153,14 @@
   <ItemGroup>
     <Content Include="Views\Shared\Site.Master" />
     <Content Include="Views\Test\Create.aspx" />
+    <Content Include="Views\Test\Delete.aspx" />
+    <Content Include="Views\Test\Details.aspx" />
+    <Content Include="Views\Test\Edit.aspx" />
     <Content Include="Views\Test\Index.aspx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Test\DisplayTemplates\" />
+    <Folder Include="Views\Test\EditorTemplates\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />
@@ -168,12 +175,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>56479</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
+          <IISUrl>http://localhost/Enslam.Site</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

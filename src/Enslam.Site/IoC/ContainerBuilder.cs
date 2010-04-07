@@ -4,6 +4,7 @@ using Castle.Core.Resource;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.Configuration.Interpreters;
+using Enslam.Common.Repositories;
 
 namespace Enslam.Site.IoC
 {
@@ -18,6 +19,10 @@ namespace Enslam.Site.IoC
                                    .Of<Controller>()
                                    .FromAssembly(Assembly.GetExecutingAssembly())
                                    .Configure(c => c.LifeStyle.Transient.Named(c.Implementation.Name.ToLower())));
+
+            container.Register(
+                Component.For(typeof (IRepository<>)).ImplementedBy(typeof (Repository<>)).LifeStyle.Transient
+            );
 
             return container;
         }

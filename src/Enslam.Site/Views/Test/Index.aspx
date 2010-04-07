@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<Enslam.Site.Models.Test>>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	Index
@@ -8,4 +8,46 @@
 
     <h2>Index</h2>
 
+    <table>
+        <tr>
+            <th></th>
+            <th>
+                Id
+            </th>
+            <th>
+                IsNew
+            </th>
+            <th>
+                Version
+            </th>
+        </tr>
+
+    <% foreach (var item in Model) { %>
+    
+        <tr>
+            <td>
+                <%= Html.ActionLink("Edit", "Edit", new { id=item.Id }) %> |
+                <%= Html.ActionLink("Details", "Details", new { id = item.Id })%> |
+                <%= Html.ActionLink("Delete", "Delete", new { id = item.Id })%>
+            </td>
+            <td>
+                <%= Html.Encode(item.Id) %>
+            </td>
+            <td>
+                <%= Html.Encode(item.IsNew) %>
+            </td>
+            <td>
+                <%= Html.Encode(item.Version) %>
+            </td>
+        </tr>
+    
+    <% } %>
+
+    </table>
+
+    <p>
+        <%= Html.ActionLink("Create New", "Create") %>
+    </p>
+
 </asp:Content>
+

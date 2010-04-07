@@ -1,14 +1,13 @@
 using System;
 using Castle.ActiveRecord;
+using Enslam.Common.Models;
 
 namespace Enslam.Site.Models
 {
     [ActiveRecord]
-    public class Test : ActiveRecordBase<Test>
+    public class Test : Entity<Test>
     {
-        [PrimaryKey(PrimaryKeyType.GuidComb)]
-        public Guid Id { get; private set; }
-
-
+        [Property]
+        public virtual string Heh { get; set; }
     }
 }
