@@ -15,9 +15,6 @@
                 Id
             </th>
             <th>
-                IsNew
-            </th>
-            <th>
                 Version
             </th>
         </tr>
@@ -32,9 +29,6 @@
             </td>
             <td>
                 <%= Html.Encode(item.Id) %>
-            </td>
-            <td>
-                <%= Html.Encode(item.IsNew) %>
             </td>
             <td>
                 <%= Html.Encode(item.Version) %>

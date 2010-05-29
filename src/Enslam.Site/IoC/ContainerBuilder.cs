@@ -1,10 +1,6 @@
-using System.Reflection;
-using System.Web.Mvc;
-using Castle.Core.Resource;
-using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.Configuration.Interpreters;
-using Enslam.Common.Repositories;
+using Enslam.Common.IoC;
 
 namespace Enslam.Site.IoC
 {
@@ -12,16 +8,14 @@ namespace Enslam.Site.IoC
     {
         public static IWindsorContainer Build()
         {
-            var container = new WindsorContainer(new XmlInterpreter(new ConfigResource()));
-
-            // automatically register controllers
-            container.Register(AllTypes
-                                   .Of<Controller>()
-                                   .FromAssembly(Assembly.GetExecutingAssembly())
-                                   .Configure(c => c.LifeStyle.Transient.Named(c.Implementation.Name.ToLower())));
-
-            container.Register(
-                Component.For(typeof (IRepository<>)).ImplementedBy(typeof (Repository<>)).LifeStyle.Transient
+            var container = new WindsorContainer(new XmlInterpreter("Windsor.config"));
+            
+            container.Install(
+                new LoggingInstaller(),
+                new AutoTxInstaller(),
+                new ActiveRecordInstaller(),
+                new ControllerInstaller(),
+                new RepositoryInstaller()
             );
 
             return container;

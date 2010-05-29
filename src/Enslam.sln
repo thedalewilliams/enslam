@@ -1,11 +1,11 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D97C2907-C9BA-4452-9BED-83D3FD26188F}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enslam.Common", "Enslam.Common\Enslam.Common.csproj", "{448B2CC5-52BD-4FC4-A055-758106E93B35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enslam.Site", "Enslam.Site\Enslam.Site.csproj", "{D1F6CFFB-23D3-4CE0-B89D-AF75D201DCAE}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D97C2907-C9BA-4452-9BED-83D3FD26188F}"
+Project("{00000000-0000-0000-0000-000000000000}") = "Enslam.Site", "Enslam.Site\Enslam.Site.csproj", "{D1F6CFFB-23D3-4CE0-B89D-AF75D201DCAE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enslam.Common.Tests", "Enslam.Common.Tests\Enslam.Common.Tests.csproj", "{A84E144B-1BC8-4C55-8209-8AB5E3693A65}"
 EndProject

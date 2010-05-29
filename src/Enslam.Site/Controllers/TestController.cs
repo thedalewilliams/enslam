@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Web.Mvc;
-using Castle.ActiveRecord;
-using Castle.ActiveRecord.Framework;
 using Castle.Services.Transaction;
 using Enslam.Common.Repositories;
 using Enslam.Site.Models;
-using TransactionMode=Castle.Services.Transaction.TransactionMode;
 using System.Linq;
 namespace Enslam.Site.Controllers
 {
@@ -43,7 +40,8 @@ namespace Enslam.Site.Controllers
         public virtual ActionResult Create()
         {
             var test = new Test();
-            ActiveRecordMediator<Test>.Save(test);
+            _testRepository.SaveOnSubmit(test);
+
             return View(test);
         } 
 
@@ -60,12 +58,12 @@ namespace Enslam.Site.Controllers
         // POST: /Test/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(Test test)
+        [Transaction(TransactionMode.Requires)]
+        public virtual ActionResult Edit(Test test)
         {
             if(ModelState.IsValid)
             {
                 _testRepository.SaveOnSubmit(test);
-
                 return RedirectToAction("Index");
             }
 
@@ -86,7 +84,8 @@ namespace Enslam.Site.Controllers
         // POST: /Test/Delete/5
 
         [HttpPost]
-        public ActionResult Delete(Test test)
+        [Transaction(TransactionMode.Requires)]
+        public virtual ActionResult Delete(Test test)
         {
             _testRepository.DeleteOnSubmit(test);
             return RedirectToAction("Index");

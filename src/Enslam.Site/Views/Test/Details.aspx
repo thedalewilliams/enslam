@@ -16,10 +16,7 @@
         
         <div class="display-label">Id</div>
         <div class="display-field"><%= Html.Encode(Model.Id) %></div>
-        
-        <div class="display-label">IsNew</div>
-        <div class="display-field"><%= Html.Encode(Model.IsNew) %></div>
-        
+
         <div class="display-label">Version</div>
         <div class="display-field"><%= Html.Encode(Model.Version) %></div>
         
