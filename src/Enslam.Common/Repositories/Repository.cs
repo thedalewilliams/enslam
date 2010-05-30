@@ -17,24 +17,40 @@ namespace Enslam.Common.Repositories
             set { _logger = value; }
         }
 
-        public Type EntityType
-        {
-            get
-            {
-                return typeof(TEntity);
-            }
-        }
-
         public Repository()
         {
 
+        }
+
+        public TEntity GetById(Guid id)
+        {
+            return ActiveRecordMediator<TEntity>.FindByPrimaryKey(id);
+        }
+
+        public void SaveOnSubmit(object entity)
+        {
+            var validator = GetValidator(entity);
+            if (validator.IsValid())
+            {
+                Save(entity);
+            }
+        }
+
+        public virtual ActiveRecordValidator GetValidator(object entity)
+        {
+            return new ActiveRecordValidator(entity);
+        }
+
+        public virtual void Save(object entity)
+        {
+            ActiveRecordMediator.Save(entity);
         }
 
         #region Implementation of IRepository<TEntity>
 
         TEntity IRepository<TEntity>.GetById(Guid id)
         {
-            return ActiveRecordMediator<TEntity>.FindByPrimaryKey(id);
+            return GetById(id);
         }
 
         IQueryable<TEntity> IRepository<TEntity>.GetAll()
@@ -44,17 +60,13 @@ namespace Enslam.Common.Repositories
 
         void IRepository<TEntity>.SaveOnSubmit(TEntity entity)
         {
-            var validator = new ActiveRecordValidator(entity);
-            if (validator.IsValid())
-            {
-                ActiveRecordMediator<TEntity>.Save(entity);
-            }
+            SaveOnSubmit(entity);
         }
 
         void IRepository<TEntity>.DeleteOnSubmit(TEntity entity)
         {
-            ActiveRecordMediator.Refresh(entity);
-            ActiveRecordMediator.Delete(entity);
+            ActiveRecordMediator<TEntity>.Refresh(entity);
+            ActiveRecordMediator<TEntity>.Delete(entity);
         }
         #endregion
 
@@ -62,7 +74,7 @@ namespace Enslam.Common.Repositories
 
         object IRepository.GetById(Guid id)
         {
-            return ActiveRecordMediator<TEntity>.FindByPrimaryKey(id);
+            return GetById(id);
         }
 
         IQueryable IRepository.GetAll()
@@ -72,15 +84,12 @@ namespace Enslam.Common.Repositories
 
         void IRepository.SaveOnSubmit(object entity)
         {
-            var validator = new ActiveRecordValidator(entity);
-            if (validator.IsValid())
-            {
-                ActiveRecordMediator.Save(entity);
-            }
+            SaveOnSubmit(entity);
         }
 
         void IRepository.DeleteOnSubmit(object entity)
         {
+            ActiveRecordMediator.Refresh(entity);
             ActiveRecordMediator.Delete(entity);
         }
 
